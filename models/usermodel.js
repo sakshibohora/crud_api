@@ -1,6 +1,6 @@
 let mongoose=require('mongoose');
 let UserSchema=mongoose.Schema({
-	fname:String,
-	lname:String
+	firstname:String,
+	lastname:String
 });
 module.exports=mongoose.model('User',UserSchema);

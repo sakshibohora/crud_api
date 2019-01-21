@@ -8,10 +8,13 @@ let path = require('path');
 let app = express();
 
 app.use("/js", express.static(__dirname + "/static/"));
+app.use(function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    next();
+});
 
-
-/*app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '/MVC/form.html'));*/
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended:true}));
 
@@ -23,4 +26,4 @@ app.get('/', function(req, res){
 // res.render('form');
 res.sendFile(__dirname + '/view/index.html');
 })
-app.listen(3000);
+app.listen(8081);
