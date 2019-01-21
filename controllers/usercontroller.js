@@ -51,10 +51,11 @@ exports.fetch = function(req, res){
 
 //Update:
 exports.update = function(req, res){
-  //  let id = mongoose.Types.ObjectId(req.params.userId);
-  console.log(req.body.firstname);
-  console.log(req.body.lastname)
-  console.log(req.params.userId)
+    if(!req.body.firstname && (!req.body.lastname)){
+        return res.status(400).send({
+            message: "enter data"
+        });
+    }
     users.findOneAndUpdate({_id: req.params.userId}, {
         _id:req.params.userId, firstname:req.body.firstname,lastname:req.body.lastname
     }, {new:true}, function(err, data){
