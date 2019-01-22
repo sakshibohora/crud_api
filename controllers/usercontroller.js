@@ -35,7 +35,7 @@ users.deleteOne({_id: id}, function(err, product){
     
     if(err) res.send(err);
     console.log('delete');   
-    res.send({message: 'Deleted'});
+    //res.send({message: 'Deleted'});
     });
 };
 

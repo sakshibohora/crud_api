@@ -10,7 +10,7 @@
 	    	$.ajax({
 				type : "POST",
 				contentType : "application/json",
-				url : "http://localhost:8081/users",
+				url : "http://localhost:3001/users",
 				data : JSON.stringify(formData),
 				dataType : 'json',
 				success : function(user) {
@@ -37,16 +37,22 @@
 function ajaxSearchAll(){
 	$.ajax({
 	type : "GET",
-	url : "http://localhost:8081/users/",
+	url : "http://localhost:3001/users/",
 	success: function(result){
-	console.log(result);
-	$('#resultdiv').empty();
+	//console.log(result);
 	result.forEach(element => {
-	$('#resultdiv').append(element.firstname+ " "+ element.lastname+"<br>");	
+		var Id=element._id;
+		console.log(Id);
+	$('#resultdiv').append('<tr><td>'+element._id+ '</td><td>'+element.firstname+
+	 '</td><td>'+element.lastname+
+	 '</td><td><button value = "'+Id+
+	 '" onclick="ajaxDelete(this.value)">Delete</button></td><td><button value="'+Id+
+	 '" onclick="ajaxUpdate(this.value)">Update</button></td></tr>');	
 	});	
 	
 	
-	console.log("Success: ", result);
+	//console.log("Success: ", result);
+	
 	},
 	error : function(e) {
 		$("#resultdiv").html("<strong>Error</strong>");
@@ -58,7 +64,7 @@ function ajaxSearchAll(){
 	function ajaxSearch(){
 		$.ajax({
 			type : "GET",
-			url : "http://localhost:8081/users/" + $('#fname').val(),
+			url : "http://localhost:3001/users/" + $('#fname').val(),
 			success: function(result){
 				console.log(result);
 				var Id=result._id;
@@ -84,13 +90,12 @@ function ajaxDelete(x){
 	// DO DELETE
 	$.ajax({
 		type : "DELETE",
-		contentType : "application/json",
-		url : "http://localhost:8081/users/"+ x,
-		dataType : 'json',
-		complete: function(user) {
+		//contentType : "application/json",
+		url : "http://localhost:3001/users/"+ x,
+		//dataType : 'json',
+		success: function(user) {
 			alert('deleted');
-			$("#resultdiv").html("<p>" +
-				"Deleted <br>" + "</p>");
+			
 		},
 		error : function(e) {
 			alert("Error!")
@@ -110,12 +115,11 @@ function ajaxUpdate(x){
 	$.ajax({
 		type : "PUT",
 		contentType : "application/json",
-		url : "http://localhost:8081/users/"+ x,
+		url : "http://localhost:3001/users/"+ x,
 		dataType : 'json',
 		data : JSON.stringify(formData),
 		complete: function(user) {
-			$("#resultdiv").html("<p>" +
-				"Updated <br>" + "</p>");
+			alert('updated')
 		},
 		error : function(e) {
 			alert("Error!")
